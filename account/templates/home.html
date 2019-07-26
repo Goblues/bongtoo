@@ -1,0 +1,8 @@
+<h1>home</h1>
+{% if user.is_authenticated %}
+<h1>{{ user.username }} 님 환영합니다.</h1>
+<a href="{% url 'signout' %}">Sign out</a>
+{% else %}
+<a href="{% url 'signin' %}">Sign in</a>
+<a href="{% url 'signup' %}">Sign up</a>
+{% endif %}

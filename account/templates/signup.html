@@ -1,0 +1,75 @@
+<form id="signup" method="POST" action="{% url 'signup' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <div>
+            {{ accountUserCreationForm.username.label_tag }}
+            {{ accountUserCreationForm.username }}
+            <span>
+                {{ accountUserCreationForm.username.errors|striptags }}
+            </span>
+        </div>
+    </div>
+    <div>
+        <div>
+            {{ accountUserCreationForm.email.label_tag }}
+            {{ accountUserCreationForm.email }}
+            <span>
+                {{ accountUserCreationForm.email.errors|striptags }}
+            </span>
+        </div>
+    </div>
+    <div>
+        <div>
+            {{ accountUserCreationForm.password1.label_tag }}
+            {{ accountUserCreationForm.password1 }}
+            <span>
+                {{ accountUserCreationForm.password1.errors|striptags }}
+            </span>
+        </div>
+    </div>
+    <div>
+        <div>
+            {{ accountUserCreationForm.password2.label_tag }}
+            {{ accountUserCreationForm.password2 }}
+            <span>
+                {{ accountUserCreationForm.password2.errors|striptags }}
+            </span>
+        </div>
+    </div>
+    <div>
+        <div>
+            {{ accountUserCreationForm.name.label_tag }}
+            {{ accountUserCreationForm.name }}
+            <span>
+                {{ accountUserCreationForm.name.errors|striptags }}
+            </span>
+        </div>
+    </div>
+    <div>
+        <div>
+            {{ accountUserCreationForm.grandcity.label_tag }}
+            {{ accountUserCreationForm.grandcity }}
+            <span>
+                {{ accountUserCreationForm.grandcity.errors|striptags }}
+            </span>
+        </div>
+    </div>
+    <div>
+        <div>
+            {{ accountUserCreationForm.city.label_tag }}
+            {{ accountUserCreationForm.city }}
+            <span>
+                {{ accountUserCreationForm.city.errors|striptags }}
+            </span>
+        </div>
+    </div>
+    {{ accountUserCreationForm.profile_image.label_tag }}
+    {{ accountUserCreationForm.profile_image }}
+    {{ accountUserCreationForm.profile_image.errors|striptags }}
+    <div>
+        <div>
+            <button id="signup" name="signup" type="submit">Sign up</button>
+            <hr>
+        </div>
+    </div>
+</form>
