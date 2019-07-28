@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from .models import User, Region, Activity
-from .forms import AccountUserCreationForm, AccountUserChangeForm, AccountAuthenticationForm, AccountUserInformationForm
+from .forms import AccountUserCreationForm, AccountUserChangeForm, AccountAuthenticationForm
 
 User = get_user_model()
 

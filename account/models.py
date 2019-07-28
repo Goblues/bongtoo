@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class Region(models.Model):
     regionname = models.CharField(null=True, blank=True, max_length=100)
-    #id = models.AutoField(primary_key=True)
 
     def __str__(self):
         return self.regionname
@@ -12,7 +11,6 @@ class Region(models.Model):
 
 class Activity(models.Model):
     activityname = models.CharField(null=True, blank=True, max_length=100)
-    #id = models.AutoField(primary_key=True)
 
     def __str__(self):
         return self.activityname

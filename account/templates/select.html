@@ -3,19 +3,32 @@
     {% if user.is_authenticated %}
     <h1>{{ user.username }} 로그인 중</h1>
     {{ accountUserInformationForm.as_table }}
-    <!--s
-<form action="" method="POST">
+    <button id="select" name="select" type="submit">Register</button>
+    {% endif %}
+</form>
+<!-- <li>
+            <form action="" method="POST">
+                <button type="submit" name="regionchoice"
+                    value="{{ region.regionname }}">{{ region.regionname }}</button>
+            </form>
+        </li>
+        <li>
+            <form action="" method="POST">
+                <button type="submit" name="activitychoice"
+                    value="{{ activity.activityname }}">{{ activity.activityname }}</button>
+            </form>
+        </li> -->
+
+<!-- {% if user.is_authenticated %}
+<h1>{{ user.username }} 로그인 중</h1>
+{% endif %}
+<form id="select" action="{% url 'select' %}" method="POST">
     {% csrf_token %}
     {% if regionlist %}
     <h1>대상</h1>
     <select name="region" id="">
         <option value="" selected>대상</option>
         {% for region in regionlist %}
-        <li>
-            <form action="" method="POST">
-                <button type="submit" name="regionchoice" value="{{ region.regionname }}">{{ region.regionname }}</button>
-            </form>
-        </li>
         <option name="regionchoice" value="{{ region.regionname }}">{{ region.regionname }}</option>
         {% endfor %}
     </select>
@@ -28,22 +41,12 @@
     <select name="activity" id="">
         <option value="" selected>활동</option>
         {% for activity in activitylist %}
-        <li>
-            <form action="" method="POST">
-                <button type="submit" name="activitychoice"
-                    value="{{ activity.activityname }}">{{ activity.activityname }}</button>
-            </form>
-        </li>
         <option name="activitychoice" value="{{ activity.activityname }}">{{ activity.activityname }}</option>
         {% endfor %}
     </select>
-    {% endif %}
+    {% endif %} -->
+<!-- <br>
     <br>
     <br>
-    <br>
-    <button type="submit">등록하기</button>
-</form>
--->
     <button id="select" name="select" type="submit">Register</button>
-</form>
-{% endif %}
+</form> -->

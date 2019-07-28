@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-from django.core.files.images import get_image_dimensions
 from .models import User, Region, Activity
+from django.core.files.images import get_image_dimensions
 
 
 class AccountAuthenticationForm(AuthenticationForm):
@@ -68,28 +68,18 @@ class AccountUserCreationForm(UserCreationForm):
     city = forms.CharField(label='City', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'City', 'required': 'True', }))
     #profile_image = forms.ImageField(label='Profile_Image', widget=forms.PictureWidget)
+    region = forms.ModelChoiceField(
+        label='Region', queryset=Region.objects.all())
+    activity = forms.ModelChoiceField(
+        label='Activity', queryset=Activity.objects.all())
 
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2',
-                  'name', 'grandcity', 'city', 'profile_image', )
+                  'name', 'grandcity', 'city', 'profile_image', 'region', 'activity', )
 
     def clean_image(self):
         profile_image = self.cleaned_data['profile_image']
-        '''
-        try:
-            w, h = get_image_dimensions(profile_image)
-            max_width = max_height = 500
-            if w > max_width or h > max_height:
-                raise forms.ValidationError(u'Please...')
-            main, sub = profile_image.content_type.split('/')
-            if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
-                raise forms.ValidationError(u'Please...')
-            if len(profile_image) > (20 * 1024):
-                raise forms.ValidationError(u'Profile_image...')
-        except AttributeError:
-            pass
-        '''
         return profile_image
 
 
@@ -100,16 +90,10 @@ class AccountUserChangeForm(UserChangeForm):
         fields = ('username', 'email')
 
 
-class AccountUserInformationForm(forms.ModelForm):
-    region = forms.ModelChoiceField(queryset=Region.objects.all())
-    activity = forms.ModelChoiceField(queryset=Activity.objects.all())
+# class AccountUserInformationForm(forms.ModelForm):
+#     region = forms.ModelChoiceField(queryset=Region.objects.all())
+#     activity = forms.ModelChoiceField(queryset=Activity.objects.all())
 
-    # def save(self, commit=True):
-    #    user = User(**self.cleaned_data)
-    #    if commit:
-    #        user.save()
-    #    return user
-
-    class Meta:
-        model = User
-        fields = ('region', 'activity')
+#     class Meta:
+#         model = User
+#         fields = ('region', 'activity')
