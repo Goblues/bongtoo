@@ -23,9 +23,3 @@ class Image(models.Model):
     review = models.ForeignKey(Review, null=True, on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to='images/', null=True, max_length=None, blank=True)
-
-
-class Page(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             null=True, on_delete=models.CASCADE)
-    review = models.ForeignKey(Review, null=True, on_delete=models.CASCADE)

@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from .forms import AccountUserCreationForm, AccountUserChangeForm, AccountAuthenticationForm
 from .models import Region, Activity, User
 from review.models import Review, Image
 from django.views.decorators.csrf import csrf_exempt
+
+User = get_user_model()
 
 
 def signup(request):
@@ -52,7 +54,20 @@ def signout(request):
 def home(request):
     reviews = Review.objects.all()
     images = Image.objects.all()
-    return render(request, "home.html", {'reviews': reviews, 'images': images, })
+    users = User.objects.all()
+    return render(request, "home.html", {'reviews': reviews, 'images': images, 'users': users, })
+
+
+def page(request, username):
+    users = User.objects.get(username=username)
+    reviews = Review.objects.filter(user=users)
+    # images = Image.objects.get(user=username)
+    context = {
+        'user': users,
+        'reviews': reviews,
+        # 'images': images,
+    }
+    return render(request, "page.html", context)
 
 
 # @csrf_exempt

@@ -3,16 +3,16 @@
 <a href="{% url 'signout' %}">Sign out</a>
 <a href="{% url 'post' %}">Review post</a>
 <div class="container">
-  <img src="{{ user.image.url }}" width="50px" height="50px" />
-  <a href="">{{ user.username }}</a> 님 환영합니다.
+    <img src="{{ user.profile_images.image.url }}" width="50px" height="50px" />
+    <a href="/{{ user.username }}">{{ user.username }}</a> 님 환영합니다.
 </div>
-{% for rew in reviews.all %}
+{% for review in reviews.all %}
 <div class="container">
-  <a href="">{{ rew.user }}</a>
-  <a href="">{{ rew.title }}</a>
-  <a href="">{{ rew.body }}</a>
-  <img src="{{ image.url }}" width="50px" height="50px" />
-  <br />
+    <a href="/{{ review.user }}">{{ review.user }}</a>
+    <a href="">{{ review.title }}</a>
+    <a href="">{{ review.body }}</a>
+    <img src="{{ image.simage.url }}" width="50px" height="50px" />
+    <br />
 </div>
 {% endfor %} {% else %}
 <a href="{% url 'signin' %}">Sign in</a>

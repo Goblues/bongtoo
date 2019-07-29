@@ -1,13 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
-from .models import Review, Image, Page
+from .models import Review, Image
 from .forms import ReviewPostForm, ImagePostForm
-
-
-def page(request, user):
-    page = get_object_or_404(Page, pk=user)
-    return render(request, "page.html", {'page': page})
-#     return HttpResponse("{} 의 페이지".format(username))
 
 
 def post(request):
@@ -27,9 +22,3 @@ def post(request):
         reviewPostForm = ReviewPostForm()
         imagePostForm = ImagePostForm()
         return render(request, "post.html", {'reviewPostForm': ReviewPostForm, 'imagePostForm': ImagePostForm, })
-
-
-# def reviewdetail(request, username, reiview_id):
-#    print("username : ", username)
-#    print("review_id : ", reiview_id)
-#    return HttpResponse("{} 의 {} 번째 리뷰")

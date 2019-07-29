@@ -16,7 +16,3 @@ class ImagePostForm(forms.ModelForm):
     def clean_image(self):
         image = self.cleaned_data['image']
         return image
-
-    # def review_image(self):
-    #     image = self.cleaned_data['image']
-    #     return image

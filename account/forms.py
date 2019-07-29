@@ -62,12 +62,12 @@ class AccountUserCreationForm(UserCreationForm):
                                 attrs={'class': 'form-control',
                                        'placeholder': 'Nickname',
                                        'required': 'True', }))
-    #name = forms.CharField(label='Nickname', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nickname', 'required': 'True', }))
+    # name = forms.CharField(label='Nickname', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nickname', 'required': 'True', }))
     grandcity = forms.CharField(label='Grandcity', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Grandcity', 'required': 'True', }))
     city = forms.CharField(label='City', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'City', 'required': 'True', }))
-    #profile_image = forms.ImageField(label='Profile_Image', widget=forms.PictureWidget)
+    # profile_image = forms.ImageField(label='Profile_Image', widget=forms.PictureWidget)
     region = forms.ModelChoiceField(
         label='Region', queryset=Region.objects.all())
     activity = forms.ModelChoiceField(
