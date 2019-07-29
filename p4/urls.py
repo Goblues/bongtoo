@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 import account.views
 import review.views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -10,7 +12,7 @@ urlpatterns = [
     path('signin/', account.views.signin, name='signin'),
     path('signout/', account.views.signout, name='signout'),
     # path('select/', account.views.select, name='select'),
-    # path('<username>/', review.views.mypage),
+    path('<int:user>/', review.views.page, name='page'),
     # path('<username>/<int:review_id>/', review.views.reviewdetail),
     path('post/', review.views.post, name='post'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

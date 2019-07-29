@@ -22,4 +22,5 @@ class User(AbstractUser):
     activity = models.ForeignKey(Activity, null=True, on_delete=models.CASCADE)
     grandcity = models.CharField(null=True, blank=True, max_length=100)
     city = models.CharField(null=True, blank=True, max_length=100)
-    profile_image = models.ImageField(null=True, max_length=None, blank=True)
+    profile_image = models.ImageField(
+        upload_to='images/', null=True, max_length=None, blank=True)

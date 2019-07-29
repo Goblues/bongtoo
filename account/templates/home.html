@@ -1,17 +1,20 @@
 <h1>HOMEPAGE</h1>
 {% if user.is_authenticated %}
-<h2><a href="/{{ user.username }}">{{ user.username }}</a> 님 환영합니다.</h2>
 <a href="{% url 'signout' %}">Sign out</a>
 <a href="{% url 'post' %}">Review post</a>
-{% for review in reviews.all %}
 <div class="container">
-    <p>{{ review.user }}</p>
-    <p>{{ review.title }}</p>
-    <p>{{ review.body }}</p>
-    <!-- <p>{{ .image }}</p> -->
+  <img src="{{ user.image.url }}" width="50px" height="50px" />
+  <a href="">{{ user.username }}</a> 님 환영합니다.
 </div>
-{% endfor %}
-{% else %}
+{% for rew in reviews.all %}
+<div class="container">
+  <a href="">{{ rew.user }}</a>
+  <a href="">{{ rew.title }}</a>
+  <a href="">{{ rew.body }}</a>
+  <img src="{{ image.url }}" width="50px" height="50px" />
+  <br />
+</div>
+{% endfor %} {% else %}
 <a href="{% url 'signin' %}">Sign in</a>
 <a href="{% url 'signup' %}">Sign up</a>
 {% endif %}

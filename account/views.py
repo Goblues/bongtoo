@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
 from .forms import AccountUserCreationForm, AccountUserChangeForm, AccountAuthenticationForm
 from .models import Region, Activity, User
-from review.models import Review
+from review.models import Review, Image
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -50,8 +50,9 @@ def signout(request):
 
 
 def home(request):
-    reviews = Review.objects
-    return render(request, "home.html", {'reviews': reviews})
+    reviews = Review.objects.all()
+    images = Image.objects.all()
+    return render(request, "home.html", {'reviews': reviews, 'images': images, })
 
 
 # @csrf_exempt

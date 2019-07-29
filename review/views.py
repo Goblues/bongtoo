@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Review, Image
+from .models import Review, Image, Page
 from .forms import ReviewPostForm, ImagePostForm
 
 
-def mypage(request, username):
-    print("username : ", username)
-    return HttpResponse("{} 의 페이지".format(username))
+def page(request, user):
+    page = get_object_or_404(Page, pk=user)
+    return render(request, "page.html", {'page': page})
+#     return HttpResponse("{} 의 페이지".format(username))
 
 
 def post(request):
