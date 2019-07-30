@@ -30,7 +30,7 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.created_by.name
+        return self.created_by.username
 
 
 class Image(models.Model):
@@ -47,4 +47,4 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "user : {}, create_at : {}".format(self.creator.name, self.created_at)
+        return "user : {}, create_at : {}".format(self.creator.username, self.created_at)
