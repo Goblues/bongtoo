@@ -42,3 +42,7 @@ class Like(models.Model):
     reivews = models.ForeignKey(
         Review, related_name="likes", null=True, on_delete=models.CASCADE)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "user : {}, create_at : {}".format(self.creator.name, self.created_at)
