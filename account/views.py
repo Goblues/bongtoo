@@ -3,7 +3,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from .forms import AccountUserCreationForm, AccountUserChangeForm, AccountAuthenticationForm
-from .models import Region, Activity, User
+from .models import User
+from commons.models import Region, Activity
+
 from review.models import Review, Image
 from django.views.decorators.csrf import csrf_exempt
 
