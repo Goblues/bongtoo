@@ -15,11 +15,11 @@ class Activity(models.Model):
     name = models.CharField(null=True, blank=True, max_length=100)
 
     def __str__(self):
-        return self.name
+        return '{},{}'.format(self.id, self.name)
 
 
 class Subject(models.Model):
     name = models.CharField(null=True, blank=True, max_length=100)
 
     def __str__(self):
-        return self.name
+        return '{},{}'.format(self.id, self.name)
