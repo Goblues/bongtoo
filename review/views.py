@@ -22,3 +22,11 @@ def post(request):
         reviewPostForm = ReviewPostForm()
         imagePostForm = ImagePostForm()
         return render(request, "post.html", {'reviewPostForm': ReviewPostForm, 'imagePostForm': ImagePostForm, })
+
+
+# def detail(request, review_id):
+#     reviews = get_object_or_404(Review, review_id=review_id)
+#     context = {
+#         'reivews': reviews,
+#     }
+#     return render(request, "detail.html", context)

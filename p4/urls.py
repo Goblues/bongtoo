@@ -14,4 +14,5 @@ urlpatterns = [
     # path('select/', account.views.select, name='select'),
     path('post/', review.views.post, name='post'),
     path('<username>/', account.views.page, name='page'),
+    # path('<int:review_id>/', review.views.detail, name='detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

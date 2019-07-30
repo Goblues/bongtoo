@@ -1,5 +1,7 @@
 <p>{{ user.username }}의 페이지입니다.</p>
 {% for review in reviews.all %}
-<p>{{ review.title }}</p>
+<a href="">
+    <p>{{ review.title }}</p>
+</a>
 <p>{{ review.body }}</p>
 {% endfor%}
