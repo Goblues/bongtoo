@@ -7,7 +7,6 @@ class Review(models.Model):
                              null=True, on_delete=models.CASCADE)
     title = models.CharField(null=True, max_length=100)
     body = models.TextField(null=True)
-    #image = models.ForeignKey(Image, null=True, on_delete=models.CASCADE)
     region = models.ForeignKey(
         "commons.Region", related_name="reivews", null=True, on_delete=models.CASCADE)
     activity = models.ForeignKey(
@@ -41,7 +40,7 @@ class Image(models.Model):
 class Like(models.Model):
     reivews = models.ForeignKey(
         Review, related_name="likes", null=True, on_delete=models.CASCADE)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True , on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
