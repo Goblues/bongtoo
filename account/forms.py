@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-from .models import User, Region, Activity
+from .models import User
+from commons.models import Region, Activity
 from django.core.files.images import get_image_dimensions
 
 
