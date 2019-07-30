@@ -37,6 +37,7 @@ DEFAULT_APPS = [
 
 EXTERNAL_APPS = [
     'rest_framework',
+    'django_extensions',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + MY_APPS + EXTERNAL_APPS
