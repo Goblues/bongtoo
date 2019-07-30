@@ -21,7 +21,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'commons.apps.CommonsConfig',
+    'commons',
     'review',
     'account',
     'django.contrib.admin',

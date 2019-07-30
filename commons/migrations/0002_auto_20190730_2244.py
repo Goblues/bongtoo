@@ -4,7 +4,7 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
+    atomic = False
     dependencies = [
         ('account', '0003_auto_20190730_2244'),
         ('review', '0003_auto_20190730_2244'),
