@@ -22,8 +22,8 @@ ALLOWED_HOSTS = []
 
 MY_APPS = [
     'commons.apps.CommonsConfig',
-    'review',
-    'account',
+    'review.apps.ReviewConfig',
+    'account.apps.AccountConfig',
 ]
 
 DEFAULT_APPS = [

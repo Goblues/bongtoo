@@ -15,6 +15,11 @@ class Review(models.Model):
         "commons.Subject", related_name="subject_reivews", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    # objects = models.Manager()
+
+    @property
+    def get_thumnail(self):
+        return self.images.get(id=1)
 
     def __str__(self):
         return self.title
@@ -30,11 +35,12 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.created_by.username
+        return "username : {}, body : {}, create_at : {}".format(self.created_by.username, self.body, self.created_at)
 
 
 class Image(models.Model):
-    review = models.ForeignKey(Review, null=True, on_delete=models.CASCADE)
+    review = models.ForeignKey(
+        Review, related_name="images", null=True, on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to='images/', null=True, max_length=None, blank=True)
 
