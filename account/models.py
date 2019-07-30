@@ -3,17 +3,17 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Region(models.Model):
-    regionname = models.CharField(null=True, blank=True, max_length=100)
+    name = models.CharField(null=True, blank=True, max_length=100)
 
     def __str__(self):
-        return self.regionname
+        return self.name
 
 
 class Activity(models.Model):
-    activityname = models.CharField(null=True, blank=True, max_length=100)
+    name = models.CharField(null=True, blank=True, max_length=100)
 
     def __str__(self):
-        return self.activityname
+        return self.name
 
 
 class User(AbstractUser):
