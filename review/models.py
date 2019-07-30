@@ -8,9 +8,11 @@ class Review(models.Model):
     title = models.CharField(null=True, max_length=100)
     body = models.TextField(null=True)
     region = models.ManyToManyField(
-        "commons.Region", related_name="reivews", null=True)
+        "commons.Region", related_name="region_reivews", blank=True)
     activity = models.ManyToManyField(
-        "commons.Activity", related_name="reivews", null=True)
+        "commons.Activity", related_name="activity_reivews", blank=True)
+    subject = models.ManyToManyField(
+        "commons.Subject", related_name="subject_reivews", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
