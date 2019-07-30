@@ -10,7 +10,5 @@ class User(AbstractUser):
         "commons.Activity", related_name="activity_users", blank=True)
     subject = models.ManyToManyField(
         "commons.Subject", related_name="subject_users",blank=True)
-    grandcity = models.CharField(null=True, blank=True, max_length=100)
-    city = models.CharField(null=True, blank=True, max_length=100)
     profile_image = models.ImageField(
         upload_to='images/', null=True, max_length=None, blank=True)
