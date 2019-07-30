@@ -23,7 +23,7 @@ class ImageAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('user', 'title')
     inlines = [
-        ImageInline, CommentInline, LikeInline, RegionInline, ActivityInline
+        ImageInline, CommentInline, LikeInline
     ]
 
 

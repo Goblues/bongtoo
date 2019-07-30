@@ -7,10 +7,10 @@ class Review(models.Model):
                              null=True, on_delete=models.CASCADE)
     title = models.CharField(null=True, max_length=100)
     body = models.TextField(null=True)
-    region = models.ForeignKey(
-        "commons.Region", related_name="reivews", null=True, on_delete=models.CASCADE)
-    activity = models.ForeignKey(
-        "commons.Activity", related_name="reivews", null=True, on_delete=models.CASCADE)
+    region = models.ManyToManyField(
+        "commons.Region", related_name="reivews", null=True)
+    activity = models.ManyToManyField(
+        "commons.Activity", related_name="reivews", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
