@@ -23,7 +23,7 @@ class Comment(models.Model):
         settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     review = models.ForeignKey(
         Review, related_name="comments", null=True, on_delete=models.CASCADE)
-    body = models.CharField(null=True,max_length=700)
+    body = models.CharField(null=True, max_length=700)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -40,7 +40,8 @@ class Image(models.Model):
 class Like(models.Model):
     reivews = models.ForeignKey(
         Review, related_name="likes", null=True, on_delete=models.CASCADE)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True , on_delete=models.CASCADE)
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
