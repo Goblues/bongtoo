@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from .models import User
-from commons.models import Region, Activity
+from commons.models import Target, Activity
 from django.core.files.images import get_image_dimensions
 
 
@@ -69,15 +69,15 @@ class AccountUserCreationForm(UserCreationForm):
     city = forms.CharField(label='City', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'City', 'required': 'True', }))
     # profile_image = forms.ImageField(label='Profile_Image', widget=forms.PictureWidget)
-    region = forms.ModelChoiceField(
-        label='Region', queryset=Region.objects.all())
+    target = forms.ModelChoiceField(
+        label='Target', queryset=Target.objects.all())
     activity = forms.ModelChoiceField(
         label='Activity', queryset=Activity.objects.all())
 
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2',
-                  'name', 'grandcity', 'city', 'profile_image', 'region', 'activity', )
+                  'name', 'grandcity', 'city', 'profile_image', 'target', 'activity', )
 
     def clean_image(self):
         profile_image = self.cleaned_data['profile_image']
@@ -92,9 +92,9 @@ class AccountUserChangeForm(UserChangeForm):
 
 
 # class AccountUserInformationForm(forms.ModelForm):
-#     region = forms.ModelChoiceField(queryset=Region.objects.all())
+#     target = forms.ModelChoiceField(queryset=Target.objects.all())
 #     activity = forms.ModelChoiceField(queryset=Activity.objects.all())
 
 #     class Meta:
 #         model = User
-#         fields = ('region', 'activity')
+#         fields = ('target', 'activity')

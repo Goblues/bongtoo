@@ -7,8 +7,8 @@ class Review(models.Model):
                              null=True, on_delete=models.CASCADE)
     title = models.CharField(null=True, max_length=100)
     body = models.TextField(null=True)
-    region = models.ManyToManyField(
-        "commons.Region", related_name="reivews", null=True)
+    target = models.ManyToManyField(
+        "commons.Target", related_name="reivews", null=True)
     activity = models.ManyToManyField(
         "commons.Activity", related_name="reivews", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,7 +23,7 @@ class Comment(models.Model):
         settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     review = models.ForeignKey(
         Review, related_name="comments", null=True, on_delete=models.CASCADE)
-    body = models.CharField(null=True,max_length=700)
+    body = models.CharField(null=True, max_length=700)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -40,7 +40,8 @@ class Image(models.Model):
 class Like(models.Model):
     reivews = models.ForeignKey(
         Review, related_name="likes", null=True, on_delete=models.CASCADE)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True , on_delete=models.CASCADE)
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

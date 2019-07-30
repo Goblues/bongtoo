@@ -1,12 +1,15 @@
 from django.contrib import admin
-from .models import Region, Activity
+from .models import Target, Activity
 
-class RegionInline(admin.TabularInline):
-  model = Region
+
+class TargetInline(admin.TabularInline):
+    model = Target
+
 
 class ActivityInline(admin.TabularInline):
-  model = Activity
+    model = Activity
+
 
 # Register your models here.
-admin.site.register(Region)
+admin.site.register(Target)
 admin.site.register(Activity)

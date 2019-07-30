@@ -10,12 +10,11 @@ User = get_user_model()
 class AccountUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + \
         (('User', {'fields': ('name', 'grandcity', 'city',
-                              'region', 'activity', 'profile_image',)}),)
+                              'target', 'activity', 'profile_image',)}),)
     add_fieldsets = UserAdmin.add_fieldsets + \
         (('User', {'fields': ('name', 'grandcity', 'city',
-                              'region', 'activity', 'profile_image',), }),)
+                              'target', 'activity', 'profile_image',), }),)
     add_form = AccountUserCreationForm
 
 
 admin.site.register(User, AccountUserAdmin)
-

@@ -8,8 +8,8 @@
 </form>
 <!-- <li>
             <form action="" method="POST">
-                <button type="submit" name="regionchoice"
-                    value="{{ region.regionname }}">{{ region.regionname }}</button>
+                <button type="submit" name="targetchoice"
+                    value="{{ target.targetname }}">{{ target.targetname }}</button>
             </form>
         </li>
         <li>
@@ -24,12 +24,12 @@
 {% endif %}
 <form id="select" action="{% url 'select' %}" method="POST">
     {% csrf_token %}
-    {% if regionlist %}
+    {% if targetlist %}
     <h1>대상</h1>
-    <select name="region" id="">
+    <select name="target" id="">
         <option value="" selected>대상</option>
-        {% for region in regionlist %}
-        <option name="regionchoice" value="{{ region.regionname }}">{{ region.regionname }}</option>
+        {% for target in targetlist %}
+        <option name="targetchoice" value="{{ target.targetname }}">{{ target.targetname }}</option>
         {% endfor %}
     </select>
     {% endif %}

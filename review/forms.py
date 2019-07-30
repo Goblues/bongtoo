@@ -5,7 +5,7 @@ from .models import Review, Image
 class ReviewPostForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ('title', 'body', 'region', 'activity', )
+        fields = ('title', 'body', 'target', 'activity', )
 
 
 class ImagePostForm(forms.ModelForm):

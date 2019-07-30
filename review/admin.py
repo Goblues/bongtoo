@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Review, Image, Comment, Like
 from .forms import ReviewPostForm, ImagePostForm
-from commons.admin import RegionInline, ActivityInline
+from commons.admin import TargetInline, ActivityInline
 
 
 class ImageInline(admin.TabularInline):
