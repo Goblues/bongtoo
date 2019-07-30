@@ -39,3 +39,8 @@ def construct_data():
   set_region()
   set_activity()
   set_subject()
+
+def delete_all_data():
+  Region.objects.all().delete()
+  Activity.objects.all().delete()
+  Subject.objects.all().delete()
