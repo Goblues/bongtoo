@@ -9,9 +9,9 @@ class Review(models.Model):
     body = models.TextField(null=True)
     #image = models.ForeignKey(Image, null=True, on_delete=models.CASCADE)
     region = models.ForeignKey(
-        "commons.Region", null=True, on_delete=models.CASCADE)
+        "commons.Region", related_name="reivews", null=True, on_delete=models.CASCADE)
     activity = models.ForeignKey(
-        "commons.Activity", null=True, on_delete=models.CASCADE)
+        "commons.Activity", related_name="reivews", null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
