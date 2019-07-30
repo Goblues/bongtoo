@@ -18,7 +18,10 @@ class Review(models.Model):
     def __str__(self):
         return self.title
 
-
+class Comments(models.Model):
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    body = models.CharField(null=True)
+    
 class Image(models.Model):
     review = models.ForeignKey(Review, null=True, on_delete=models.CASCADE)
     image = models.ImageField(
