@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from .forms import AccountUserCreationForm, AccountUserChangeForm, AccountAuthenticationForm
 from .models import User
 from commons.models import Target, Activity
-
 from review.models import Review, Image
 from django.views.decorators.csrf import csrf_exempt
 
@@ -61,7 +60,7 @@ def home(request):
 
 
 def page(request, username):
-    users = User.objects.get(username=username)
+    users = get_object_or_404(User, username=username)
     reviews = Review.objects.filter(user=users)
     # images = Image.objects.get(user=username)
     context = {

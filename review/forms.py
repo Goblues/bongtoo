@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review, Image
+from .models import Review, Image, Comment
 
 
 class ReviewPostForm(forms.ModelForm):
@@ -16,3 +16,9 @@ class ImagePostForm(forms.ModelForm):
     def clean_image(self):
         image = self.cleaned_data['image']
         return image
+
+
+class CommentPostForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body', )

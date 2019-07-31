@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 import account.views
 import review.views
 from django.conf import settings
@@ -14,5 +14,5 @@ urlpatterns = [
     # path('select/', account.views.select, name='select'),
     path('post/', review.views.post, name='post'),
     path('<username>/', account.views.page, name='page'),
-    # path('<int:review_id>/', review.views.detail, name='detail'),
+    path('detail/<int:review_id>/', review.views.detail, name='detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

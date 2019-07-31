@@ -4,13 +4,15 @@
 <a href="{% url 'post' %}">Review post</a>
 <div class="container">
     <img src="{{ user.profile_images.image.url }}" width="50px" height="50px" />
-    <a href="/{{ user.username }}">{{ user.username }}</a> 님 환영합니다.
+    <!-- <a href="/{{ user.username }}">{{ user.username }}</a> 님 환영합니다. -->
+    <a href="{% url 'page' user.username %}">{{ user.username }}</a> 님 환영합니다.
 </div>
 {% for review in reviews.all %}
 <div class="container">
-    <a href="/{{ review.user }}">{{ review.user }}</a>
-    <a href="">{{ review.title }}</a>
-    <a href="">{{ review.body }}</a>
+    <!-- <a href="/{{ review.user }}">{{ review.user }}</a> -->
+    <a href="{% url 'page' review.user %}">{{ review.user }}</a>
+    <a href="{% url 'detail' review.id %}">{{ review.title }}</a>
+    {{ review.body }}
     <a href=""><img src="{{ image.image.url }}" width="50px" height="50px" /></a>
     <br />
 </div>

@@ -8,9 +8,9 @@ class Review(models.Model):
     title = models.CharField(null=True, max_length=100)
     body = models.TextField(null=True)
     target = models.ManyToManyField(
-        "commons.Target", related_name="reivews", null=True)
+        "commons.Target", related_name="reivews", blank=True)
     activity = models.ManyToManyField(
-        "commons.Activity", related_name="reivews", null=True)
+        "commons.Activity", related_name="reivews", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -23,7 +23,7 @@ class Comment(models.Model):
         settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     review = models.ForeignKey(
         Review, related_name="comments", null=True, on_delete=models.CASCADE)
-    body = models.CharField(null=True, max_length=700)
+    body = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

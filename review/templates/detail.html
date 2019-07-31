@@ -1,0 +1,10 @@
+<h1>디테일 페이지입니다.</h1>
+<p>{{ reviewid.title }}</p>
+<p>{{ reviewid.body }}</p>
+
+<h1>해당 리뷰의 댓글</h1>
+<form id="post_comment" method="POST" action="">
+    {% csrf_token %}
+    {{ commentPostForm }}
+    <button id="post_comment" name="post_comment" type="submit">Comment Post</button>
+</form>

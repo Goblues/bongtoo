@@ -1,6 +1,6 @@
 <p>{{ user.username }}의 페이지입니다.</p>
 {% for review in reviews.all %}
-<a href="">
+<a href="{% url 'detail' review.id %}">
     <p>{{ review.title }}</p>
 </a>
 <p>{{ review.body }}</p>
