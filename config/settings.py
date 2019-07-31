@@ -20,10 +20,20 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+<<<<<<< HEAD:p4/settings.py
 INSTALLED_APPS = [
     'commons',
     'review',
     'account',
+=======
+MY_APPS = [
+    'commons.apps.CommonsConfig',
+    'review.apps.ReviewConfig',
+    'account.apps.AccountConfig',
+]
+
+DEFAULT_APPS = [
+>>>>>>> feature/data_init:config/settings.py
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,6 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+EXTERNAL_APPS = [
+    'rest_framework',
+]
+
+INSTALLED_APPS = DEFAULT_APPS + MY_APPS + EXTERNAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -42,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'p4.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -60,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'p4.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database

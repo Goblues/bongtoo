@@ -7,6 +7,7 @@ from .forms import AccountUserCreationForm, AccountUserChangeForm, AccountAuthen
 User = get_user_model()
 
 
+<<<<<<< HEAD
 class AccountUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + \
         (('User', {'fields': ('name', 'grandcity', 'city',
@@ -18,3 +19,17 @@ class AccountUserAdmin(UserAdmin):
 
 
 admin.site.register(User, AccountUserAdmin)
+=======
+# class AccountUserAdmin(UserAdmin):
+#     fieldsets = UserAdmin.fieldsets + \
+#         (('User', {'fields': ('name', 'grandcity', 'city',
+#                               'region', 'activity', 'profile_image',)}),)
+#     add_fieldsets = UserAdmin.add_fieldsets + \
+#         (('User', {'fields': ('name', 'grandcity', 'city',
+#                               'region', 'activity', 'profile_image',), }),)
+#     add_form = AccountUserCreationForm
+
+
+admin.site.register(User)
+
+>>>>>>> feature/data_init
