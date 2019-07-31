@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    name = models.CharField(null=True, blank=True, max_length=255)
     region = models.ManyToManyField(
         "commons.Region", related_name="region_users",blank=True)
     activity = models.ManyToManyField(
