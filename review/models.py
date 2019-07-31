@@ -21,6 +21,10 @@ class Review(models.Model):
     def get_thumnail(self):
         return self.images.get(id=1).image
 
+    @property
+    def like_count(self):
+        return self.likes.all().count()
+
     def __str__(self):
         return self.title
 

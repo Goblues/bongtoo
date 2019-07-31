@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import Review, Comment, Image, Like
+# app
+from review.models import Review, Comment, Image, Like
+# commons
+from commons.serializers import RegionSerializer, SubjectSerializer, ActivitySerializer
+# account
+from account.serializers import UserSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -20,12 +25,36 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ReviewSerializer(serializers.ModelSerializer):
+class ReviewListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = (
-			'id',
-			'title',
-			'body',
+            'id',
+            'title',
+            'body',
             'get_thumnail',
-		)
+        )
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    region = RegionSerializer(many=True)
+    subject = SubjectSerializer(many=True)
+    activity = ActivitySerializer(many=True)
+    comments = CommentSerializer(many=True)
+
+    class Meta:
+        model = Review
+        fields = [
+            'id',
+            'title',
+            'body',
+            'created_at',
+            'updated_at',
+            'user',
+            'region',
+            'subject',
+            'activity',
+            'comments',
+            'like_count'
+        ]
