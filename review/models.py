@@ -19,7 +19,7 @@ class Review(models.Model):
 
     @property
     def get_thumnail(self):
-        return self.images.get(id=1)
+        return self.images.get(id=1).image
 
     def __str__(self):
         return self.title
