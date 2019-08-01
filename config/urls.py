@@ -1,22 +1,25 @@
 from django.contrib import admin
-from django.urls import path
-import account.views
-import review.views
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
+# rest_framework
+from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
-
+# app's view
 from review.restviews import SearchReviewList, ReviewView, MyReviewView
-from account.views import UserLV, UserDV
+from .views import ApiRoot
+# app's urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', UserLV.as_view()),
-    path('api/users/<user_id>/', UserDV.as_view()),
-    path('api/search/reviews/', SearchReviewList.as_view(), name="search_review"),
-    path('api/reviews/', ReviewView.as_view()),
-    path('api/<pk>/reviews/', MyReviewView.as_view(), name="my_review")
+    path('', ApiRoot.as_view(), name="api"),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('users/', include('account.urls')),
+    path('api/search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
+    path('api/reviews/', ReviewView.as_view(), name="reviews"),
+    # path('api/<pk>/reviews/', MyReviewView.as_view(), name="my_review"),
     # path('api/search/service/')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
