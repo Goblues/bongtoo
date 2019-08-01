@@ -7,6 +7,9 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
+# jwt
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
+
 # app's view
 from review.restviews import SearchReviewList, ReviewView, MyReviewView
 from .views import ApiRoot
