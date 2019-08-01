@@ -20,12 +20,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-<<<<<<< HEAD:p4/settings.py
-INSTALLED_APPS = [
-    'commons',
-    'review',
-    'account',
-=======
 MY_APPS = [
     'commons.apps.CommonsConfig',
     'review.apps.ReviewConfig',
@@ -33,7 +27,6 @@ MY_APPS = [
 ]
 
 DEFAULT_APPS = [
->>>>>>> feature/data_init:config/settings.py
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

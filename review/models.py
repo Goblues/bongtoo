@@ -53,7 +53,7 @@ class Like(models.Model):
     reivews = models.ForeignKey(
         Review, related_name="likes", null=True, on_delete=models.CASCADE)
     creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+        settings.AUTH_USER_MODEL, related_name="likes",  null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

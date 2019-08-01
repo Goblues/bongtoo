@@ -1,35 +1,5 @@
-<<<<<<< HEAD
-autopep8==1.4.4
-beautifulsoup4==4.7.1
-bs4==0.0.1
-certifi==2019.6.16
-chardet==3.0.4
-cycler==0.10.0
-Django==2.2.3
-idna==2.8
-JPype1==0.7.0
-kiwisolver==1.1.0
-konlpy==0.5.1
-lxml==4.3.4
-matplotlib==3.1.1
-numpy==1.16.4
-pandas==0.25.0
-Pillow==6.1.0
-pycodestyle==2.5.0
-pyparsing==2.4.0
-python-dateutil==2.8.0
-pytz==2019.1
-requests==2.22.0
-selenium==3.141.0
-six==1.12.0
-soupsieve==1.9.2
-sqlparse==0.3.0
-urllib3==1.25.3
-xlrd==1.2.0
-=======
 Django==2.2.3
 djangorestframework==3.10.2
 Pillow==6.1.0
 pytz==2019.1
 sqlparse==0.3.0
->>>>>>> feature/data_init
