@@ -19,7 +19,7 @@ class Review(models.Model):
 
     @property
     def get_thumnail(self):
-        return self.images.get(id=1).image
+        return self.images.first()        # return self.images.get(id=1).image
 
     @property
     def like_count(self):
@@ -50,7 +50,7 @@ class Image(models.Model):
 
 
 class Like(models.Model):
-    reivews = models.ForeignKey(
+    review = models.ForeignKey(
         Review, related_name="likes", null=True, on_delete=models.CASCADE)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="likes",  null=True, on_delete=models.CASCADE)

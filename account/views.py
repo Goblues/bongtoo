@@ -5,7 +5,7 @@ from account.models import User
 from account.serializers import UserSerializer
 
 from review.models import Review, Like
-from review.serializers import ReviewListSerializer
+from review.serializers import LikedReviewSerializer, ReviewListSerializer
 
 
 class UserLV(APIView):
@@ -26,5 +26,13 @@ class UserLikeView(APIView):
     def get(self, request, user_id, format=None):
         user = User.objects.get(id=user_id)
         likes = user.likes.all()
-        serializer = ReviewListSerializer(likes, many=True)
+        serializer = LikedReviewSerializer(likes, many=True)
+        return Response(serializer.data)
+
+
+class UserReviewView(APIView):
+    def get(self, request, user_id, format=None):
+        user = User.objects.get(id=user_id)
+        reviews = user.reviews.all()
+        serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
