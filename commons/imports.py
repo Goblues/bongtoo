@@ -8,6 +8,7 @@ def set_region():
         ['서울특별시', '서대문구'],
     ]
     for item in region_list:
+        print(item)
         Region.objects.create(city=item[0], town=item[1])
 
 
@@ -20,6 +21,7 @@ def set_activity():
         '취약 계층'
     ]
     for item in activity_list:
+        print(item)
         Activity.objects.create(name=item)
 
 
@@ -33,6 +35,7 @@ def set_subject():
         '치료'
     ]
     for item in subject_list:
+        print(item)
         Subject.objects.create(name=item)
 
 
@@ -40,6 +43,8 @@ def construct_data():
     set_region()
     set_activity()
     set_subject()
+    print("commons 데이터 초기화 완료")
+    
 
 
 def delete_all_data():

@@ -16,16 +16,15 @@ class CommentSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = '__all__'
-
-
-class LikeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Like
-        fields = '__all__'
+        fields = [
+            'id',
+            'image'
+        ]
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
+    get_thumnail = ImageSerializer(ImageSerializer)
+
     class Meta:
         model = Review
         fields = (
@@ -34,6 +33,19 @@ class ReviewListSerializer(serializers.ModelSerializer):
             'body',
             'get_thumnail',
         )
+
+
+class LikedReviewSerializer(serializers.ModelSerializer):
+    review = ReviewListSerializer()
+
+    class Meta:
+        model = Like
+        fields = [
+            'id',
+            'review',
+            'creator',
+            'created_at'
+        ]
 
 
 class ReviewSerializer(serializers.ModelSerializer):

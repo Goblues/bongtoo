@@ -1,7 +1,5 @@
 from django.contrib import admin
 from .models import Review, Image, Comment, Like
-from .forms import ReviewPostForm, ImagePostForm
-from commons.admin import TargetInline, ActivityInline
 
 
 class ImageInline(admin.TabularInline):
@@ -16,12 +14,16 @@ class LikeInline(admin.TabularInline):
     model = Like
 
 
+class LikeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'review', 'creator', 'created_at')
+
+
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('review', 'image')
+    list_display = ('id', 'review', 'image')
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('user', 'title')
+    list_display = ('id', 'user', 'title')
     inlines = [
         ImageInline, CommentInline, LikeInline
     ]
@@ -30,4 +32,4 @@ class ReviewAdmin(admin.ModelAdmin):
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(Comment)
-admin.site.register(Like)
+admin.site.register(Like, LikeAdmin)

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Review, Image
 from account.models import User
-from .serializers import ImageSerializer, LikeSerializer, ReviewSerializer, CommentSerializer, ReviewListSerializer
+from .serializers import ImageSerializer, ReviewSerializer, CommentSerializer, ReviewListSerializer
 
 
 class SearchReviewList(APIView):
