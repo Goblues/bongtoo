@@ -1,12 +1,13 @@
 from rest_framework import serializers
 # app
 from review.models import Review, Comment, Image, Like
+from commons.models import Region, Activity, Subject
 # commons
 from commons.serializers import RegionSerializer, SubjectSerializer, ActivitySerializer
 # account
 from users.serializers import UserSerializer
 
-
+ActivityModel = Activity
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
@@ -52,9 +53,12 @@ class LikedReviewSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
-    region = RegionSerializer(many=True, required=False)
-    subject = SubjectSerializer(many=True, required=False)
-    activity = ActivitySerializer(many=True, required=False)
+    region = RegionSerializer(
+        many=True, source="region_reivews", required=False)
+    subject = SubjectSerializer(
+        many=True, source='subject_reivews', required=False)
+    activity = ActivitySerializer(
+        many=True, required=False)
     comments = CommentSerializer(many=True, required=False)
     images = ImageSerializer(many=True, required=False)
 
@@ -74,3 +78,30 @@ class ReviewSerializer(serializers.ModelSerializer):
             'like_count',
             'images'
         ]
+
+    def create(self, validated_data):
+        # regions_data = validated_data.pop('region')
+        # print(regions_data)
+        activity_data = validated_data.pop('activity')
+        print(activity_data)
+        # subject_data = validated_data.pop('subject')
+        # print(subject_data)
+        review = Review.objects.create(**validated_data)
+        
+        # for data in regions_data:
+        #     region, created = Region.objects.get(
+        #         city=data['city'], town=data['town']
+        #     )
+        #     review.region.add(region)
+
+        for data in activity_data:
+            activity = Activity.objects.get(
+                id=data['id'])
+            review.activity.add(activity)
+
+        # for data in subject_data:
+        #     subject, created = Subject.objects.get(
+        #         id=data['id'])
+        #     review.subject.add(subject)
+
+        return review
