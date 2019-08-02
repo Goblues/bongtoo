@@ -14,6 +14,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+
     class Meta:
         model = Image
         fields = [
@@ -23,7 +25,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
-    get_thumnail = ImageSerializer(ImageSerializer)
+    get_thumnail = ImageSerializer(read_only=True)
 
     class Meta:
         model = Review
@@ -49,11 +51,12 @@ class LikedReviewSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    region = RegionSerializer(many=True)
-    subject = SubjectSerializer(many=True)
-    activity = ActivitySerializer(many=True)
-    comments = CommentSerializer(many=True)
+    user = UserSerializer(required=False)
+    region = RegionSerializer(many=True, required=False)
+    subject = SubjectSerializer(many=True, required=False)
+    activity = ActivitySerializer(many=True, required=False)
+    comments = CommentSerializer(many=True, required=False)
+    images = ImageSerializer(many=True, required=False)
 
     class Meta:
         model = Review
@@ -68,5 +71,6 @@ class ReviewSerializer(serializers.ModelSerializer):
             'subject',
             'activity',
             'comments',
-            'like_count'
+            'like_count',
+            'images'
         ]
