@@ -25,24 +25,26 @@ class ReviewView(APIView):
         if 'activity' in data:
             print('true')
             activity = data.pop('activity')
-        # else:
-        #     activity = []
-        # if 'subject' in data:
-        #     subject = data.pop('subject')
-        # else:
-        #     subject = []
-        # if 'region' in data:
-        #     region = data.pop('region')
-        # else:
-        #     region = []
+        else:
+            activity = []
+        if 'subject' in data:
+            subject = data.pop('subject')
+        else:
+            subject = []
+        if 'region' in data:
+            region = data.pop('region')
+        else:
+            region = []
         print(activity)
         serializer = ReviewSerializer(data=request.data)
 
         # images = ImageSerializer()
-        if serializer.is_valid():
-            serializer.save(user=user, activity=activity)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
-        else:
+        try:
+            if serializer.is_valid():
+                serializer.save(user=user, activity=activity,
+                                subject=subject,region=region)
+                return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

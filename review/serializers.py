@@ -80,28 +80,28 @@ class ReviewSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        # regions_data = validated_data.pop('region')
-        # print(regions_data)
-        activity_data = validated_data.pop('activity')
-        print(activity_data)
-        # subject_data = validated_data.pop('subject')
-        # print(subject_data)
-        review = Review.objects.create(**validated_data)
-        
-        # for data in regions_data:
-        #     region, created = Region.objects.get(
-        #         city=data['city'], town=data['town']
-        #     )
-        #     review.region.add(region)
+        try:
+            subject_data = validated_data.pop('subject')
+            activity_data = validated_data.pop('activity')
+            regions_data = validated_data.pop('region')
+            review = Review.objects.create(**validated_data)
+            
+            for data in regions_data:
+                region, created = Region.objects.get(
+                    city=data['city'], town=data['town']
+                )
+                review.region.add(region)
 
-        for data in activity_data:
-            activity = Activity.objects.get(
-                id=data['id'])
-            review.activity.add(activity)
+            for data in activity_data:
+                activity = Activity.objects.get(
+                    id=data['id'])
+                review.activity.add(activity)
 
-        # for data in subject_data:
-        #     subject, created = Subject.objects.get(
-        #         id=data['id'])
-        #     review.subject.add(subject)
-
-        return review
+            for data in subject_data:
+                subject, created = Subject.objects.get(
+                    id=data['id'])
+                review.subject.add(subject)
+        except:
+            review.delete()
+        finally:
+            return review
