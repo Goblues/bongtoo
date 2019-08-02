@@ -2,9 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Review, Image
-from account.models import User
 from .serializers import ImageSerializer, ReviewSerializer, CommentSerializer, ReviewListSerializer
-
+from users.models import User
 
 class SearchReviewList(APIView):
     def get(self, request, format=None):

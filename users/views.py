@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from account.models import User
-from account.serializers import UserSerializer
+from rest_framework import status, authentication, permissions
+from users.models import User
+from users.serializers import UserSerializer
 
 from review.models import Review, Like
 from review.serializers import LikedReviewSerializer, ReviewListSerializer

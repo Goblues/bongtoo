@@ -4,7 +4,7 @@ from review.models import Review, Comment, Image, Like
 # commons
 from commons.serializers import RegionSerializer, SubjectSerializer, ActivitySerializer
 # account
-from account.serializers import UserSerializer
+from users.serializers import UserSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):

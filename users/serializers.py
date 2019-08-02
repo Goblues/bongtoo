@@ -1,6 +1,6 @@
 from rest_framework import serializers
 # app
-from account.models import User
+from users.models import User
 # commons
 from commons.serializers import RegionSerializer, ActivitySerializer, SubjectSerializer
 
