@@ -136,10 +136,6 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = False
 
 # REST AUTH
 
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'users.serializers.UserSerializer',
-}
-
 # all_auth
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

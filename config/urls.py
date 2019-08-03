@@ -21,7 +21,7 @@ urlpatterns = [
     path('', ApiRoot.as_view(), name="api"),
     # auth
     path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    # path('rest-auth/registration/', include('rest_auth.registration.urls')),
     re_path(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
     # user
     path('users/', include('users.urls')),
