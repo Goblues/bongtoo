@@ -75,6 +75,21 @@ class UserDV(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+    def patch(self, request, user_id, format=None):
+        user = User.objects.get(id=user_id)
+        data = request.data
+
+        activity_data = data.pop('activity', [])
+        subject_data = data.pop('subject', [])
+        region_data = data.pop('region', [])
+        serializer = UserSerializer(user, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=user, activity=activity_data,
+                            subject=subject_data, region=region_data)
+            return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserLikeView(APIView):
     def get(self, request, user_id, format=None):

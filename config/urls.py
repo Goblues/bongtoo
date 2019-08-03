@@ -27,7 +27,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     # review
     path('api/search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
-    path('api/reviews/', ReviewView.as_view(), name="reviews"),
-    # path('api/<pk>/reviews/', MyReviewView.as_view(), name="my_review"),
-    # path('api/search/service/')
+    path('reviews/',include('review.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
