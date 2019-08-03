@@ -7,6 +7,6 @@ class ApiRoot(APIView):
     def get(self, request, format=None):
         return Response({
             'users': reverse('users', request=request, format=format),
-            'reviews': reverse('reviews', request=request, format=format),
+            'reviews': reverse('review:list', request=request, format=format),
             'seacrch_reviews': reverse('search_reviews', request=request, format=format),
         })

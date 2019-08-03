@@ -1,7 +1,8 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Review, Image
+from .models import Review, Image, Like, Comment
 from .serializers import ImageSerializer, ReviewSerializer, CommentSerializer, ReviewListSerializer
 from users.models import User
 
@@ -45,9 +46,27 @@ class ReviewView(APIView):
         except:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class ReviewDetailView(APIView):
+    def get(self, request, review_id, format=None):
+        reivew = get_object_or_404(Review,id=review_id)
+        serializer = ReviewSerializer(reivew)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 class MyReviewView(APIView):
     def get(self, request, pk, format=None):
         reviews = User.objects.get(id=pk).reviews
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
+
+class LikeReview(APIView):
+    def post(self, request, review_id, format=None):
+        user = request.user
+        review = get_object_or_404(Review,id=review_id)
+        try:
+            Like.objects.get(creator=user, review=review)
+            return Response(status=status.HTTP_304_NOT_MODIFIED)
+        except Like.DoesNotExist:
+            Like.objects.create(creator=user, review=review)
+            return Response(status=status.HTTP_201_CREATED)
+
+        
