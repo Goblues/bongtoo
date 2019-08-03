@@ -10,9 +10,9 @@ from commons.serializers import RegionSerializer, ActivitySerializer, SubjectSer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    region = RegionSerializer(many=True)
-    activity = ActivitySerializer(many=True)
-    subject = SubjectSerializer(many=True)
+    region = RegionSerializer(many=True, required=False)
+    activity = ActivitySerializer(many=True, required=False)
+    subject = SubjectSerializer(many=True, required=False)
 
     class Meta:
         model = User
@@ -25,6 +25,34 @@ class UserSerializer(serializers.ModelSerializer):
             'activity',
             'subject'
         ]
+
+    def update(self, instance, validated_data):
+        print('validated', validated_data)
+        activity_data = validated_data.pop('activity', [])
+        subject_data = validated_data.pop('subject', [])
+        region_data = validated_data.pop('region', [])
+
+        for data in region_data:
+            region = Region.objects.get(
+                city=data['city'], town=data['town']
+            )
+            instance.region.set(region)
+
+        print('activity_data', activity_data)
+        datas = []
+        for data in activity_data:
+            activity = Activity.objects.get(
+                id=data['id'])
+            datas.append(activity)
+        
+        instance.activity.set(datas)
+
+        for data in subject_data:
+            subject = Subject.objects.get(
+                id=data['id'])
+            instance.subject.set(subject)
+
+        return super().update(instance, validated_data)
 
 
 class UserRoughList(serializers.ModelSerializer):

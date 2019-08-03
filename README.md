@@ -89,12 +89,21 @@
 
 # Review
 ## 'reviews/'
-> get :
-리뷰 리스트 보기
+> get : 리뷰 리스트 보기
 
 > post : 리뷰 작성 회원가입
 
 ## 'reviews/<review_id>'
-> get : 리뷰
+> get : 리뷰 디테일 보기
 
-> put : 리뷰수정/미구현 
+> put : 리뷰수정
+
+## 'reviews/<review_id>/like'
+> post : 좋아요 하기
+
+> delete : 좋아요 취소
+
+## 'reviews/<reivew_id>/comments'
+> get : 댓글 리스트 보기
+
+> post : 댓글 작성

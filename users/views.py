@@ -70,10 +70,32 @@ class UserCreateView(RegisterView):
 
 
 class UserDV(APIView):
+    def pop_and_delete(self, instance, data, key):
+        if key in data:
+            # setattr(instance, key, None)
+            return data.pop(key)
+        return []
+
     def get(self, request, user_id, format=None):
         user = User.objects.get(id=user_id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
+    def patch(self, request, user_id, format=None):
+        user = User.objects.get(id=user_id)
+        data = request.data
+
+        activity_data = self.pop_and_delete(user, data, 'activity')
+        subject_data = self.pop_and_delete(user, data, 'subject')
+        region_data = self.pop_and_delete(user, data, 'region')
+        print('data', data)
+        serializer = UserSerializer(user, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=user, activity=activity_data,
+                            subject=subject_data, region=region_data)
+            return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLikeView(APIView):
