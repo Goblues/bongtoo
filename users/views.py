@@ -70,12 +70,6 @@ class UserCreateView(RegisterView):
 
 
 class UserDV(APIView):
-    def pop_and_delete(self, instance, data, key):
-        if key in data:
-            # setattr(instance, key, None)
-            return data.pop(key)
-        return []
-
     def get(self, request, user_id, format=None):
         user = User.objects.get(id=user_id)
         serializer = UserSerializer(user)
@@ -85,10 +79,9 @@ class UserDV(APIView):
         user = User.objects.get(id=user_id)
         data = request.data
 
-        activity_data = self.pop_and_delete(user, data, 'activity')
-        subject_data = self.pop_and_delete(user, data, 'subject')
-        region_data = self.pop_and_delete(user, data, 'region')
-        print('data', data)
+        activity_data = data.pop('activity', [])
+        subject_data = data.pop('subject', [])
+        region_data = data.pop('region', [])
         serializer = UserSerializer(user, data=data, partial=True)
         if serializer.is_valid():
             serializer.save(user=user, activity=activity_data,

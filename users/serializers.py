@@ -27,30 +27,19 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
     def update(self, instance, validated_data):
-        print('validated', validated_data)
-        activity_data = validated_data.pop('activity', [])
-        subject_data = validated_data.pop('subject', [])
-        region_data = validated_data.pop('region', [])
+        # print('validated', validated_data)
+        filed_list = [
+            {'instance': Activity, 'field': 'activity'},
+            {'instance': Subject, 'field': 'subject'},
+            {'instance': Region, 'field':  'region'}
+        ]
 
-        for data in region_data:
-            region = Region.objects.get(
-                city=data['city'], town=data['town']
-            )
-            instance.region.set(region)
-
-        print('activity_data', activity_data)
-        datas = []
-        for data in activity_data:
-            activity = Activity.objects.get(
-                id=data['id'])
-            datas.append(activity)
-        
-        instance.activity.set(datas)
-
-        for data in subject_data:
-            subject = Subject.objects.get(
-                id=data['id'])
-            instance.subject.set(subject)
+        for field in filed_list:
+            nested_datas = validated_data.pop(field['field'], [])
+            datas = []
+            for data in nested_datas:
+                datas.append(field['instance'].objects.get(**data))
+            getattr(instance, field['field']).set(datas)
 
         return super().update(instance, validated_data)
 
