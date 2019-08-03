@@ -19,6 +19,7 @@ def set_activity():
         '아동',
         '청소년',
         '취약 계층'
+        '기타'
     ]
     for item in activity_list:
         print(item)

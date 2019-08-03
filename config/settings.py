@@ -1,5 +1,7 @@
 import os
-AUTH_USER_MODEL = 'account.User'
+import datetime
+from django.urls import reverse_lazy
+AUTH_USER_MODEL = 'users.User'
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,7 +25,7 @@ ALLOWED_HOSTS = []
 MY_APPS = [
     'commons.apps.CommonsConfig',
     'review.apps.ReviewConfig',
-    'account.apps.AccountConfig',
+    'users.apps.UsersConfig',
 ]
 
 DEFAULT_APPS = [
@@ -33,10 +35,17 @@ DEFAULT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 EXTERNAL_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_auth',
+    'rest_auth.registration',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + MY_APPS + EXTERNAL_APPS
@@ -60,6 +69,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # default
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -68,6 +78,13 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -81,6 +98,47 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Login path
+# LOGIN_REDIRECT_URL = reverse_lazy('r:')
+# LOGIN_URL = reverse_lazy('account:rest_login')
+# LOGOUT_REDIRECT_URL = reverse_lazy('account:rest_logout')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    # 'JWT_SECRET_KEY': SECRET_KEY,
+    # 'JWT_ALGORITHM': 'HS256',
+    # 'JWT_ALLOW_REFRESH': True,
+    # 'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
+    'JWT_VERIFY_EXPIRATION': False
+}
+REST_USE_JWT = True
+ACCOUNT_LOGOUT_ON_GET = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+SOCIALACCOUNT_QUERY_EMAIL = False
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+ACCOUNT_CONFIRM_EMAIL_ON_GET = False
+# ACCOUNT_EMAIL_VERIFICATION='mandatory'
+
+# REST AUTH
+
+# all_auth
+SITE_ID = 1
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Password validation

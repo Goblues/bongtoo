@@ -1,12 +1,13 @@
 from rest_framework import serializers
 # app
 from review.models import Review, Comment, Image, Like
+from commons.models import Region, Activity, Subject
 # commons
 from commons.serializers import RegionSerializer, SubjectSerializer, ActivitySerializer
 # account
-from account.serializers import UserSerializer
+from users.serializers import UserSerializer
 
-
+ActivityModel = Activity
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
@@ -14,6 +15,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+
     class Meta:
         model = Image
         fields = [
@@ -23,7 +26,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
-    get_thumnail = ImageSerializer(ImageSerializer)
+    get_thumnail = ImageSerializer(read_only=True)
 
     class Meta:
         model = Review
@@ -49,11 +52,15 @@ class LikedReviewSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    region = RegionSerializer(many=True)
-    subject = SubjectSerializer(many=True)
-    activity = ActivitySerializer(many=True)
-    comments = CommentSerializer(many=True)
+    user = UserSerializer(required=False)
+    region = RegionSerializer(
+        many=True, source="region_reivews", required=False)
+    subject = SubjectSerializer(
+        many=True, source='subject_reivews', required=False)
+    activity = ActivitySerializer(
+        many=True, required=False)
+    comments = CommentSerializer(many=True, required=False)
+    images = ImageSerializer(many=True, required=False)
 
     class Meta:
         model = Review
@@ -68,5 +75,33 @@ class ReviewSerializer(serializers.ModelSerializer):
             'subject',
             'activity',
             'comments',
-            'like_count'
+            'like_count',
+            'images'
         ]
+
+    def create(self, validated_data):
+        try:
+            subject_data = validated_data.pop('subject')
+            activity_data = validated_data.pop('activity')
+            regions_data = validated_data.pop('region')
+            review = Review.objects.create(**validated_data)
+            
+            for data in regions_data:
+                region, created = Region.objects.get(
+                    city=data['city'], town=data['town']
+                )
+                review.region.add(region)
+
+            for data in activity_data:
+                activity = Activity.objects.get(
+                    id=data['id'])
+                review.activity.add(activity)
+
+            for data in subject_data:
+                subject, created = Subject.objects.get(
+                    id=data['id'])
+                review.subject.add(subject)
+        except:
+            review.delete()
+        finally:
+            return review

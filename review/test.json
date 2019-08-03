@@ -1,0 +1,23 @@
+{
+  "username": "node2",
+  "password1": "gtah22yk",
+  "password2": "gtah22yk",
+  "activity": [
+    {
+      "id": "2"
+    },
+    {
+      "id": "3"
+    }
+  ],
+  "subject": [
+    {
+      "id": "3"
+    },
+    {
+      "id": "4"
+    }
+  ],
+  "region":[
+  ]
+}

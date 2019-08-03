@@ -5,7 +5,7 @@ from django.conf import settings
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="reviews",
                              null=True, on_delete=models.CASCADE)
-    title = models.CharField(null=True, max_length=100)
+    title = models.CharField(null=False, blank=True, max_length=100)
     body = models.TextField(null=True)
     region = models.ManyToManyField(
         "commons.Region", related_name="region_reivews", blank=True)
@@ -44,9 +44,9 @@ class Comment(models.Model):
 
 class Image(models.Model):
     review = models.ForeignKey(
-        Review, related_name="images", null=True, on_delete=models.CASCADE)
+        Review, related_name="images", blank=True, null=True, on_delete=models.CASCADE)
     image = models.ImageField(
-        upload_to='images/', null=True, max_length=None, blank=True)
+        upload_to='images/', max_length=None, null=True, blank=True)
 
 
 class Like(models.Model):
