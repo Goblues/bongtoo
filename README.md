@@ -80,6 +80,8 @@
 ## 'users/<user_id>'
 > get :
 유저 디테일, id
+
+> patch : 유저 정보 수정, 비밀번호는 없음
 ## 'users/<user_id>/likes'
 > get :
 유저가 좋아요한 리뷰 리스트
@@ -104,6 +106,14 @@
 > delete : 좋아요 취소
 
 ## 'reviews/<reivew_id>/comments'
-> get : 댓글 리스트 보기
+> get : 리뷰 댓글 리스트 보기
 
 > post : 댓글 작성
+
+## 'comments/'
+> get : 모든 댓글 리스트 보기
+
+## 'comments/<int:pk>'
+> get : 코멘트 디테일
+
+> PATCH, PUT : 코멘트 수정하기

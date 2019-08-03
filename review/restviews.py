@@ -1,10 +1,19 @@
+# django
 from django.shortcuts import get_object_or_404
+# rest framework
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework import mixins
+# my app
+# review
 from .models import Review, Image, Like, Comment
 from .serializers import ImageSerializer, ReviewSerializer, CommentSerializer, ReviewListSerializer
+# users
 from users.models import User
+from users.serializers import UserSerializer
 
 
 class SearchReviewList(APIView):
@@ -80,8 +89,10 @@ class MyReviewView(APIView):
         return Response(serializer.data)
 
 # 리뷰 좋아요 하기 위한 뷰
+
+
 class LikeReview(APIView):
-    # 리뷰 좋아요 
+    # 리뷰 좋아요
     def post(self, request, review_id, format=None):
         user = request.user
         review = get_object_or_404(Review, id=review_id)
@@ -92,6 +103,7 @@ class LikeReview(APIView):
             Like.objects.create(creator=user, review=review)
             return Response(status=status.HTTP_201_CREATED)
     # 좋아요 취소
+
     def delete(self, request, review_id, format=None):
         user = request.user
         review = get_object_or_404(Review, id=review_id)
@@ -103,7 +115,7 @@ class LikeReview(APIView):
             return Response(status=status.HTTP_304_NOT_MODIFIED)
 
 
-class CommentView(APIView):
+class ReviewCommentView(APIView):
     def get(self, reqeust, review_id, format=None):
         review = get_object_or_404(Review, id=review_id)
         comments = review.comments.all()
@@ -113,7 +125,6 @@ class CommentView(APIView):
     def post(self, request, review_id, format=None):
         user = request.user
         review = get_object_or_404(Review, id=review_id)
-
         serializer = CommentSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -121,3 +132,15 @@ class CommentView(APIView):
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CommentsView(ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class CommetDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]

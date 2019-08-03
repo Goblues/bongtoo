@@ -9,7 +9,7 @@ from users.serializers import UserSerializer, UserRoughList
 
 ActivityModel = Activity
 class CommentSerializer(serializers.ModelSerializer):
-    created_by = UserRoughList()
+    created_by = UserRoughList(read_only=True)
     class Meta:
         model = Comment
         fields = [
