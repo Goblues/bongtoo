@@ -23,7 +23,6 @@ class ReviewView(APIView):
         user = request.user
         data = request.data
         if 'activity' in data:
-            print('true')
             activity = data.pop('activity')
         else:
             activity = []
@@ -35,7 +34,6 @@ class ReviewView(APIView):
             region = data.pop('region')
         else:
             region = []
-        print(activity)
         serializer = ReviewSerializer(data=request.data)
 
         # images = ImageSerializer()

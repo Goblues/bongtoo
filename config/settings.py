@@ -1,5 +1,6 @@
 import os
 import datetime
+from django.urls import reverse_lazy
 AUTH_USER_MODEL = 'users.User'
 
 
@@ -42,6 +43,7 @@ EXTERNAL_APPS = [
     'rest_framework.authtoken',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_auth',
     'rest_auth.registration',
 ]
@@ -96,14 +98,20 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Login path
+# LOGIN_REDIRECT_URL = reverse_lazy('r:')
+# LOGIN_URL = reverse_lazy('account:rest_login')
+# LOGOUT_REDIRECT_URL = reverse_lazy('account:rest_logout')
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
 }
 
@@ -117,11 +125,25 @@ JWT_AUTH = {
 }
 REST_USE_JWT = True
 ACCOUNT_LOGOUT_ON_GET = True
-SOCIALACCOUNT_QUERY_EMAIL = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
+SOCIALACCOUNT_QUERY_EMAIL = False
 ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+ACCOUNT_CONFIRM_EMAIL_ON_GET = False
+# ACCOUNT_EMAIL_VERIFICATION='mandatory'
+
+# REST AUTH
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.serializers.UserSerializer',
+}
+
+# all_auth
+SITE_ID = 1
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
