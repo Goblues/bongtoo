@@ -11,6 +11,11 @@
   * city : char
   * town : char
 
+### imports
+* construct_data  
+  commons 데이터 초기화하는 함수
+  
+
 ## Review
 봉사활동 리뷰들을 위한 앱
 ### Models
