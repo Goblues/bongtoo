@@ -79,8 +79,9 @@ class MyReviewView(APIView):
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
 
-
+# 리뷰 좋아요 하기 위한 뷰
 class LikeReview(APIView):
+    # 리뷰 좋아요 
     def post(self, request, review_id, format=None):
         user = request.user
         review = get_object_or_404(Review, id=review_id)
@@ -90,6 +91,16 @@ class LikeReview(APIView):
         except Like.DoesNotExist:
             Like.objects.create(creator=user, review=review)
             return Response(status=status.HTTP_201_CREATED)
+    # 좋아요 취소
+    def delete(self, request, review_id, format=None):
+        user = request.user
+        review = get_object_or_404(Review, id=review_id)
+        try:
+            like = Like.objects.get(creator=user, review=review)
+            like.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Like.DoesNotExist:
+            return Response(status=status.HTTP_304_NOT_MODIFIED)
 
 
 class CommentView(APIView):
