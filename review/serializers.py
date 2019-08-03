@@ -1,17 +1,23 @@
 from rest_framework import serializers
 # app
 from review.models import Review, Comment, Image, Like
-from commons.models import Region, Activity, Subject
 # commons
+from commons.models import Region, Activity, Subject
 from commons.serializers import RegionSerializer, SubjectSerializer, ActivitySerializer
 # account
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, UserRoughList
 
 ActivityModel = Activity
 class CommentSerializer(serializers.ModelSerializer):
+    created_by = UserRoughList()
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = [
+            'id',
+            'body',
+            'created_by',
+            'created_at',
+        ]
 
 
 class ImageSerializer(serializers.ModelSerializer):

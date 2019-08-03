@@ -27,6 +27,16 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
+class UserRoughList(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            'profile_image',
+        ]
+
+
 class UserCreateSerializer(RegisterSerializer):
     email = serializers.EmailField(required=False)
     region = RegionSerializer(
