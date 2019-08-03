@@ -67,3 +67,34 @@
   * Region : manyToMany(Region)
   * subject : manyToMany(Subject)
   * activity : manyToMany(Activity)
+
+
+# API
+# USER
+## 'users/'
+> get :
+유저 리스트 
+## 'users/registration'
+> post :
+유저 회원가입
+## 'users/<user_id>'
+> get :
+유저 디테일, id
+## 'users/<user_id>/likes'
+> get :
+유저가 좋아요한 리뷰 리스트
+## 'users/<user_id>/reviews'
+> get :
+유저가 작성한 리뷰 리스트
+
+# Review
+## 'reviews/'
+> get :
+리뷰 리스트 보기
+
+> post : 리뷰 작성 회원가입
+
+## 'reviews/<review_id>'
+> get : 리뷰
+
+> put : 리뷰수정/미구현 

@@ -7,7 +7,6 @@ from .serializers import ImageSerializer, ReviewSerializer, CommentSerializer, R
 from users.models import User
 
 
-
 class SearchReviewList(APIView):
     def get(self, request, format=None):
         review = Review.objects.all()
@@ -49,10 +48,29 @@ class ReviewView(APIView):
 
 
 class ReviewDetailView(APIView):
+    def find_own_Review(self, review_id, user):
+        try:
+            review = Review.objects.get(id=review_id, creator=user)
+            return review
+        except Review.DoesNotExist:
+            return None
+
     def get(self, request, review_id, format=None):
         reivew = get_object_or_404(Review, id=review_id)
         serializer = ReviewSerializer(reivew)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, review_id, format=None):
+        user = request.user
+        review = self.find_own_Review(review_id, user)
+        if review is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        serializer = ReviewSerializer(review, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=user)
+            return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyReviewView(APIView):
