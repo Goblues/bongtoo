@@ -26,6 +26,7 @@ MY_APPS = [
     'commons.apps.CommonsConfig',
     'review.apps.ReviewConfig',
     'users.apps.UsersConfig',
+    'services',
 ]
 
 DEFAULT_APPS = [

@@ -3,11 +3,12 @@ import os
 from services.models import Volunteer
 from commons.models import Region
 
-os.chdir('./')
-
 
 def input():
-    with open('test.csv') as csvfile:
+    # path = os.path.abspath('./')
+    # print(path)
+    # os.chdir(path)
+    with open('/home/gtah2mint/Workspace/bongtoo/jinuo/services/test.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             _, created = Region.objects.get_or_create(
