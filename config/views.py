@@ -9,4 +9,5 @@ class ApiRoot(APIView):
             'users': reverse('users', request=request, format=format),
             'reviews': reverse('review:list', request=request, format=format),
             'seacrch_reviews': reverse('search_reviews', request=request, format=format),
+            'seacrch_volunteers': reverse('search_volunteers', request=request, format=format),
         })
