@@ -10,7 +10,8 @@ from .serializers import VolunteerSerializer
 
 
 class ServiceListView(APIView, PageNumberPagination):
-    page_size = 5
+    page_size = 8
+
     def get(self, request, format=None):
         filters = {
             'activityclass__in': request.GET.getlist('activites'),
@@ -22,6 +23,6 @@ class ServiceListView(APIView, PageNumberPagination):
         volunteer = Volunteer.objects.filter(
             **filters)
         result = self.paginate_queryset(volunteer, request, view=self)
-        serializer = VolunteerSerializer(volunteer, many=True)
+        serializer = VolunteerSerializer(result, many=True)
 
         return self.get_paginated_response(serializer.data)

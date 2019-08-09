@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import mixins
 # my app
 # review
@@ -16,7 +17,9 @@ from users.models import User
 from users.serializers import UserSerializer
 
 
-class SearchReviewList(APIView):
+class SearchReviewList(APIView, PageNumberPagination):
+    page_size = 8
+
     def get(self, request, format=None):
         filters = {
             'activity__in': request.GET.getlist('activites'),
@@ -28,9 +31,9 @@ class SearchReviewList(APIView):
         filters = dict(filter(lambda item: item[1], items))
         review = Review.objects.filter(
             **filters)
-        serializer = ReviewListSerializer(review, many=True)
-        return Response(serializer.data)
-
+        result = self.paginate_queryset(review, request, view=self)
+        serializer = ReviewListSerializer(result, many=True)
+        return self.get_paginated_response(serializer.data)
 
 class ReviewView(APIView):
     def get(self, request, format=None):

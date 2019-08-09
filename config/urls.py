@@ -51,7 +51,6 @@ urlpatterns = [
     # review
     path('search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
     path('search/volunteer/', ServiceListView.as_view(), name="search_volunteers"),
-    path('reviews/', include('review.urls')),
     path('api/search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
     path('reviews/',include('review.urls')),
     # path('v1/', include('docs.urls')),
