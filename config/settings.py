@@ -100,12 +100,10 @@ DATABASES = {
     }
 }
 
-# Login path
-# LOGIN_REDIRECT_URL = reverse_lazy('r:')
-# LOGIN_URL = reverse_lazy('account:rest_login')
-# LOGOUT_REDIRECT_URL = reverse_lazy('account:rest_logout')
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2,
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),

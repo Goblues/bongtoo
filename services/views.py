@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
+from rest_framework.pagination import PageNumberPagination
 
 from .models import Volunteer
 from .serializers import VolunteerSerializer
 # Create your views here.
 
 
-class ServiceListView(APIView):
+class ServiceListView(APIView, PageNumberPagination):
+    page_size = 5
     def get(self, request, format=None):
         filters = {
             'activityclass__in': request.GET.getlist('activites'),
@@ -18,5 +21,7 @@ class ServiceListView(APIView):
         filters = dict(filter(lambda item: item[1], filters.items()))
         volunteer = Volunteer.objects.filter(
             **filters)
+        result = self.paginate_queryset(volunteer, request, view=self)
         serializer = VolunteerSerializer(volunteer, many=True)
-        return Response(serializer.data)
+
+        return self.get_paginated_response(serializer.data)
