@@ -27,6 +27,7 @@ MY_APPS = [
     'review.apps.ReviewConfig',
     'users.apps.UsersConfig',
     'services',
+    'docs.apps.DocsConfig',
 ]
 
 DEFAULT_APPS = [
@@ -47,6 +48,7 @@ EXTERNAL_APPS = [
     'allauth.socialaccount',
     'rest_auth',
     'rest_auth.registration',
+    'drf_yasg',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + MY_APPS + EXTERNAL_APPS
