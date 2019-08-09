@@ -12,6 +12,10 @@ from django.conf.urls import url
 
 # rest_framework
 from allauth.account.views import confirm_email
+
+# app's view
+from services.views import ServiceListView
+
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
@@ -40,10 +44,14 @@ urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
     # auth
     # path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    re_path(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
+    re_path(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$',
+            confirm_email, name='account_confirm_email'),
     # user
     path('users/', include('users.urls')),
     # review
+    path('search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
+    path('search/volunteer/', ServiceListView.as_view(), name="search_volunteers"),
+    path('reviews/', include('review.urls')),
     path('api/search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
     path('reviews/',include('review.urls')),
     # path('v1/', include('docs.urls')),

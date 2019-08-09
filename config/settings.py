@@ -17,7 +17,7 @@ SECRET_KEY = 'p-dca10r*ilpx)=l)fc8r6p&-2(u!5a0cvv4sgonanx(igoi5*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -26,6 +26,7 @@ MY_APPS = [
     'commons.apps.CommonsConfig',
     'review.apps.ReviewConfig',
     'users.apps.UsersConfig',
+    'services',
     'docs.apps.DocsConfig',
 ]
 
@@ -101,12 +102,10 @@ DATABASES = {
     }
 }
 
-# Login path
-# LOGIN_REDIRECT_URL = reverse_lazy('r:')
-# LOGIN_URL = reverse_lazy('account:rest_login')
-# LOGOUT_REDIRECT_URL = reverse_lazy('account:rest_logout')
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2,
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),

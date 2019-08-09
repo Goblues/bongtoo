@@ -18,14 +18,32 @@ from users.serializers import UserSerializer
 
 class SearchReviewList(APIView):
     def get(self, request, format=None):
-        review = Review.objects.all()
+        filters = {
+            'activity__in': request.GET.getlist('activites'),
+            'subject__in': request.GET.getlist('subjects'),
+            'region__city': request.GET.get('city'),
+            'region__town': request.GET.get('town')
+        }
+        items = filters.items()
+        filters = dict(filter(lambda item: item[1], items))
+        review = Review.objects.filter(
+            **filters)
         serializer = ReviewListSerializer(review, many=True)
         return Response(serializer.data)
 
 
 class ReviewView(APIView):
     def get(self, request, format=None):
-        review = Review.objects.all()
+        filters = {
+            'activity__in': request.GET.getlist('activites'),
+            'subject__in': request.GET.getlist('subjects'),
+            'region__city': request.GET.get('city'),
+            'region__town': request.GET.get('town')
+        }
+        items = filters.items()
+        filters = dict(filter(lambda item: item[1], items))
+        review = Review.objects.filter(
+            **filters)
         serializer = ReviewSerializer(review, many=True)
         return Response(serializer.data)
 
