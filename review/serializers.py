@@ -8,8 +8,11 @@ from commons.serializers import RegionSerializer, SubjectSerializer, ActivitySer
 from users.serializers import UserSerializer, UserRoughList
 
 ActivityModel = Activity
+
+
 class CommentSerializer(serializers.ModelSerializer):
     created_by = UserRoughList(read_only=True)
+
     class Meta:
         model = Comment
         fields = [
@@ -29,6 +32,12 @@ class ImageSerializer(serializers.ModelSerializer):
             'id',
             'image'
         ]
+
+
+class CreateImageSerializer(serializers.ModelDurationField):
+    class Meta:
+        model = Image
+        fields = '__all__'
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
@@ -91,7 +100,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             activity_data = validated_data.pop('activity')
             regions_data = validated_data.pop('region')
             review = Review.objects.create(**validated_data)
-            
+
             for data in regions_data:
                 region, created = Region.objects.get(
                     city=data['city'], town=data['town']

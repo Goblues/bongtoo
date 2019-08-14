@@ -3,7 +3,9 @@ from django.shortcuts import get_object_or_404
 # rest framework
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
+from rest_framework import generics
 from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.pagination import PageNumberPagination
@@ -11,7 +13,7 @@ from rest_framework import mixins
 # my app
 # review
 from .models import Review, Image, Like, Comment
-from .serializers import ImageSerializer, ReviewSerializer, CommentSerializer, ReviewListSerializer
+from .serializers import ImageSerializer, ReviewSerializer, CommentSerializer, ReviewListSerializer, CreateImageSerializer
 # users
 from users.models import User
 from users.serializers import UserSerializer
@@ -34,6 +36,7 @@ class SearchReviewList(APIView, PageNumberPagination):
         result = self.paginate_queryset(review, request, view=self)
         serializer = ReviewListSerializer(result, many=True)
         return self.get_paginated_response(serializer.data)
+
 
 class ReviewView(APIView):
     def get(self, request, format=None):
@@ -101,6 +104,49 @@ class ReviewDetailView(APIView):
             return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class ImageView(APIView):
+#     parser_classes = (MultiPartParser, FormParser, )
+
+#     def modify_input_for_multiple_files(image):
+#         dict = {}
+#         dict['image'] = image
+#         return dict
+
+#     def get(self, request, review_id, format=None):
+#         review = Review.objects.get(id=review_id)
+#         images = review.images.all()
+#         serializer = ImageSerializer(images, many=True)
+#         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class ImageView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+   
+    def modify_input_for_multiple_files(review, image):
+        dict = {}
+        dict['review'] = review
+        dict['image'] = image
+        return dict
+
+    def get(self, request, review_id, format=None):
+        review = get_object_or_404(Review, id=review_id)
+        images = review.images.all()
+        serializer = ImageSerializer(images, many=True)
+        return Response(serializer.data, safe=False)
+
+    def post(self, request, review_id, format=None):
+        review = get_object_or_404(Review, id=review_id)
+        images = dict((request.data).lists())['image']
+        arr = []
+        for image in images:
+            image_dict = Image(image=image,review=review)
+            image_dict.save()
+            arr.append(image_dict)
+        serializer = ImageSerializer(arr, many=True)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+
 
 
 class MyReviewView(APIView):

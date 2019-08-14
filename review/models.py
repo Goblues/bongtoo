@@ -15,7 +15,8 @@ class Review(models.Model):
         "commons.Subject", related_name="subject_reivews", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # objects = models.Manager()
+    class Meta:
+        ordering = ['-created_at']
 
     @property
     def get_thumnail(self):
@@ -27,6 +28,7 @@ class Review(models.Model):
 
     def __str__(self):
         return self.title
+  
 
 
 class Comment(models.Model):
