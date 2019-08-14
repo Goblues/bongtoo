@@ -105,25 +105,14 @@ class ReviewDetailView(APIView):
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# class ImageView(APIView):
-#     parser_classes = (MultiPartParser, FormParser, )
-
-#     def modify_input_for_multiple_files(image):
-#         dict = {}
-#         dict['image'] = image
-#         return dict
-
-#     def get(self, request, review_id, format=None):
-#         review = Review.objects.get(id=review_id)
-#         images = review.images.all()
-#         serializer = ImageSerializer(images, many=True)
-#         return Response(data=serializer.data, status=status.HTTP_200_OK)
+    def delete(self, request, review_id, format=None):
+        get_object_or_404(Review, id=review_id).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ImageView(APIView):
     parser_classes = (MultiPartParser, FormParser)
-   
+
     def modify_input_for_multiple_files(review, image):
         dict = {}
         dict['review'] = review
@@ -141,12 +130,11 @@ class ImageView(APIView):
         images = dict((request.data).lists())['image']
         arr = []
         for image in images:
-            image_dict = Image(image=image,review=review)
+            image_dict = Image(image=image, review=review)
             image_dict.save()
             arr.append(image_dict)
         serializer = ImageSerializer(arr, many=True)
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
-
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class MyReviewView(APIView):
