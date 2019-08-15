@@ -1,12 +1,14 @@
 from django.conf import settings
+from django.db import models
 # rest framework
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, authentication, permissions
+from rest_framework import status, authentication, permissions, serializers
 
 # rest_auth
 from rest_auth.registration.views import RegisterView
 from rest_auth.utils import jwt_encode
+from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from rest_auth.app_settings import (TokenSerializer,
                                     JWTSerializer,
                                     create_token)
@@ -33,23 +35,23 @@ class UserCreateView(RegisterView):
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
     permissions_class = (permissions.AllowAny)
+    parser_classes = (FormParser, FileUploadParser)
 
     def perform_create(self, serializer):
         validated_data = self.request.data
-        user = serializer.save(
-            self.request)
+        # profile_image = self.request.data.pop('profile_image')
+        # self.request.data['profile_image'] = serializers.ImageField(profile_image)
+        user = serializer.save(self.request.data)
+
         if getattr(settings, 'REST_USE_JWT', False):
             self.token = jwt_encode(user)
         else:
             create_token(self.token_model, user, serializer)
 
-        complete_signup(self.request._request, user,
-                        allauth_settings.EMAIL_VERIFICATION,
-                        None)
-
-        subject_data = validated_data.pop('subject')
-        activity_data = validated_data.pop('activity')
-        regions_data = validated_data.pop('region')
+        subject_data = validated_data.pop('subject', [])
+        activity_data = validated_data.pop('activity', [])
+        regions_data = validated_data.pop('region', [])
+        profile_image = validated_data.pop('profile_image', None)
 
         for data in regions_data:
             region = Region.objects.get(
@@ -66,6 +68,10 @@ class UserCreateView(RegisterView):
             subject = Subject.objects.get(
                 id=data['id'])
             user.subject.add(subject)
+
+        complete_signup(self.request._request, user,
+                        allauth_settings.EMAIL_VERIFICATION,
+                        None)
         return user
 
 

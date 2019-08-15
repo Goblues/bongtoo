@@ -69,9 +69,9 @@ class LikedReviewSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     region = RegionSerializer(
-        many=True, source="region_reivews", required=False)
+        many=True, required=False)
     subject = SubjectSerializer(
-        many=True, source='subject_reivews', required=False)
+        many=True, required=False)
     activity = ActivitySerializer(
         many=True, required=False)
     comments = CommentSerializer(many=True, required=False)
@@ -102,7 +102,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             review = Review.objects.create(**validated_data)
 
             for data in regions_data:
-                region, created = Region.objects.get(
+                region = Region.objects.get(
                     city=data['city'], town=data['town']
                 )
                 review.region.add(region)
@@ -113,7 +113,7 @@ class ReviewSerializer(serializers.ModelSerializer):
                 review.activity.add(activity)
 
             for data in subject_data:
-                subject, created = Subject.objects.get(
+                subject= Subject.objects.get(
                     id=data['id'])
                 review.subject.add(subject)
         except:

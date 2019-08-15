@@ -13,7 +13,7 @@
     "args": [
       "runserver",
       "--noreload",
-      "localhost:8002" 
+      "localhost:8000" 
     ],
     "django": true,
   }]

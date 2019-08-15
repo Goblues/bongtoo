@@ -55,10 +55,11 @@ class UserRoughList(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(RegisterSerializer):
-    email = serializers.EmailField(required=False)
+    email = serializers.EmailField(required=False, allow_blank=False)
     region = RegionSerializer(
         many=True, required=False)
     subject = SubjectSerializer(
         many=True, required=False)
     activity = ActivitySerializer(
         many=True, required=False)
+    profile_image = serializers.ImageField(required=False)
