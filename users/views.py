@@ -35,13 +35,13 @@ class UserCreateView(RegisterView):
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
     permissions_class = (permissions.AllowAny)
-    parser_classes = (FormParser, FileUploadParser)
+    parser_classes = (MultiPartParser, FormParser, FileUploadParser)
 
     def perform_create(self, serializer):
         validated_data = self.request.data
-        # profile_image = self.request.data.pop('profile_image')
-        # self.request.data['profile_image'] = serializers.ImageField(profile_image)
-        user = serializer.save(self.request.data)
+        profile_image = self.request.data.pop('profile_image')[0]
+        self.request.data['profile_image'] = profile_image.file
+        user = serializer.save(data=self.request)
 
         if getattr(settings, 'REST_USE_JWT', False):
             self.token = jwt_encode(user)
@@ -51,7 +51,6 @@ class UserCreateView(RegisterView):
         subject_data = validated_data.pop('subject', [])
         activity_data = validated_data.pop('activity', [])
         regions_data = validated_data.pop('region', [])
-        profile_image = validated_data.pop('profile_image', None)
 
         for data in regions_data:
             region = Region.objects.get(
