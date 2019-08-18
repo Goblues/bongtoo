@@ -56,7 +56,6 @@ urlpatterns = [
     # review
     path('search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
     path('search/volunteer/', ServiceListView.as_view(), name="search_volunteers"),
-    path('api/search/reviews/', SearchReviewList.as_view(), name="search_reviews"),
     path('reviews/', include('review.urls')),
     # api docs
     url(r'^swagger(?P<format>\.json|\.yaml)$',

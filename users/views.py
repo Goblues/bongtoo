@@ -39,9 +39,7 @@ class UserCreateView(RegisterView):
 
     def perform_create(self, serializer):
         validated_data = self.request.data
-        profile_image = self.request.data.pop('profile_image')[0]
-        self.request.data['profile_image'] = profile_image.file
-        user = serializer.save(data=self.request)
+        user = serializer.save(self.request)
 
         if getattr(settings, 'REST_USE_JWT', False):
             self.token = jwt_encode(user)
@@ -71,6 +69,8 @@ class UserCreateView(RegisterView):
         complete_signup(self.request._request, user,
                         allauth_settings.EMAIL_VERIFICATION,
                         None)
+        user.profile_image.save(
+            self.request.FILES['profile_image'].name, self.request.FILES['profile_image'].file)
         return user
 
 
